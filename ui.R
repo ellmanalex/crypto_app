@@ -14,8 +14,8 @@ fluidPage(
           br(),
           br(),
           h4('Select Date'),
-          dateInput(inputId = 'start_date', label = 'From:', max = 'output$end_date'),
-          dateInput(inputId = 'end_date', label = 'To:', min = 'output$start_date'),
+          dateInput(inputId = 'start_date', label = 'From:', value = min(data$trade_date)),
+          dateInput(inputId = 'end_date', label = 'To:', value = max(data$trade_date)),
           checkboxGroupInput(inputId = 'overview_groups', label = h4('Currencies to Display'), 
             choices = list('Bitcoin','Ethereum','Altcoins'))
         ),
@@ -23,12 +23,12 @@ fluidPage(
           br(),
           br(),
           br(),
-          plotOutput('historical_mp')
+          plotlyOutput('historical_mp')
           )),
       fluidRow(
         column(2,""),
         column(10,
-          plotOutput('historical_v')
+          plotlyOutput('historical_v')
           ))),
     tabPanel('Portfolio', icon = icon('wallet')
     )

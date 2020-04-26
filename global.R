@@ -1,24 +1,29 @@
 library(shiny)
 library(shinythemes)
 library(ggplot2)
-library(dplr)
+library(dplyr)
 library(zoo)
 library(lubridate)
-llibrary(scales)
+library(scales)
+library(plotly)
 
 
 data = read.csv('crypto_data.csv')
 
 # format date column to dates
 
-data$trade_date = as.Date(data$trade_date)
+data$trade_date = mdy(data$trade_date)
 
 # create dataframe to be used for overview tab
 
-group_data = data %>% summarise(market_cap = sum(market_cap)) %>% 
-mutate(day_before = lag(market_cap,1)) %>% 
+group_data = data %>%  group_by(group,trade_date) %>% 
+  summarise(market_cap = sum(market_cap)) %>% 
+  mutate(day_before = lag(market_cap,1)) %>% 
   mutate(percent_change = (market_cap-day_before)/day_before) %>% 
   mutate(vol_group = rollapply(percent_change,30,sd,partial=TRUE)) %>% 
-  drop_na() %>% group_by(trade_date,group)
+  drop_na() %>%
+  group_by(trade_date,group) %>%
+  mutate(market_cap = sum(market_cap))
+
 
 
