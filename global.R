@@ -8,7 +8,7 @@ library(scales)
 library(plotly)
 
 
-data = read.csv('crypto_data.csv')
+data = read.csv('crypto_data_v2.csv')
 
 # format date column to dates
 
@@ -23,7 +23,7 @@ group_data = data %>%  group_by(group,trade_date) %>%
   mutate(vol_group = rollapply(percent_change,30,sd,partial=TRUE)) %>% 
   drop_na() %>%
   group_by(trade_date,group) %>%
-  mutate(market_cap = sum(market_cap))
+  mutate(market_cap = sum(market_cap)/1000000000)
 
 
 

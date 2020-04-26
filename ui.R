@@ -17,7 +17,7 @@ fluidPage(
           dateInput(inputId = 'start_date', label = 'From:', value = min(data$trade_date)),
           dateInput(inputId = 'end_date', label = 'To:', value = max(data$trade_date)),
           checkboxGroupInput(inputId = 'overview_groups', label = h4('Currencies to Display'), 
-            choices = list('Bitcoin','Ethereum','Altcoins'))
+            choices = list('Bitcoin','Ethereum','Altcoins'), selected = list('Bitcoin','Ethereum','Altcoins'))
         ),
         column(10,
           br(),
