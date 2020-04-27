@@ -6,6 +6,7 @@ library(zoo)
 library(lubridate)
 library(scales)
 library(plotly)
+library(DT)
 
 
 data = read.csv('crypto_data_v2.csv')

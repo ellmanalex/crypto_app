@@ -140,14 +140,15 @@ chart_data = reactive({
 		trade_date <= input$pc_end_date[1])
 	})
 
-output$portfolio_table = renderTable({
-	portfolio_data() %>% filter(trade_date == input$p_end_date[1]) %>% 
+output$portfolio_table = DT::renderDataTable({
+	DT::datatable(portfolio_data() %>% filter(trade_date == input$p_end_date[1]) %>% 
 	select(crypto_name, buy_quantity, buy_price, price_usd, owned_value, buy_quantity) %>% 
 	mutate(return_dollars = owned_value - buy_price*buy_quantity, return_percent = ((price_usd-buy_price)/(buy_price)*100)) %>%
 	#add_row(crypto_name = 'Portfolio', buy_quantity = NA, buy_price = sum(price_usd), return_dollars = 
 		#sum(return_dollars), return_percent = (sum(price_usd)-sum(return_dollars))/sum(return_dollars)) %>%
 	select('Cryptocurrency' = crypto_name, 'Buy Price' = buy_price, 'Sell Price' = price_usd, 'Return %' = 
-		return_percent, 'Return $' = return_dollars)
+		return_percent, 'Return $' = return_dollars), options = list(dom = 't')) %>% 
+	formatRound(columns=c(2:5),digits=2)
 	})
 
 output$portfolio_chart = renderPlotly({
@@ -160,6 +161,10 @@ output$portfolio_chart = renderPlotly({
 		scale_y_continuous(name = 'Portfolio Value',labels = unit_format(prefix = '$', unit = '')) +
 		guides(color = guide_legend(title = 'Currency'))
 		})
+
+output$maindata = renderDataTable({
+	data
+})
 
 	})
 

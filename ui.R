@@ -2,7 +2,7 @@ library(shiny)
 library(shinythemes)
 
 fluidPage(
-  theme = ('simplex'),
+  theme = ('sandstone'),
   navbarPage(
     title = 'Cryptocurrency Market', 
     id = 'nav',
@@ -53,7 +53,7 @@ fluidPage(
             br(),
             br(),
             br(),
-            tableOutput('portfolio_table'),
+            dataTableOutput('portfolio_table'),
             br()
           )),
       fluidRow(
@@ -78,6 +78,16 @@ fluidPage(
           ),
         column(8,
           plotlyOutput('portfolio_chart')
+          )
+        )
+      ),
+    tabPanel('Data', icon = icon('database'),
+      fluidRow(
+        column(12, align = 'center',
+          br(),
+          br(),
+          br(),
+          dataTableOutput('maindata')
           )
         )
       )
