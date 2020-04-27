@@ -1,7 +1,7 @@
 library(shiny)
 library(shinythemes)
 library(ggplot2)
-library(dplyr)
+library(tidyverse)
 library(zoo)
 library(lubridate)
 library(scales)
@@ -24,6 +24,3 @@ group_data = data %>%  group_by(group,trade_date) %>%
   drop_na() %>%
   group_by(trade_date,group) %>%
   mutate(market_cap = sum(market_cap)/1000000000)
-
-
-
